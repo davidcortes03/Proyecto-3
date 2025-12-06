@@ -6,5 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/Ana Maria/Downloads/javase-3.5.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ana Maria/Downloads/core-3.5.3-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
