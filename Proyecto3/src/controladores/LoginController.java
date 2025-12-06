@@ -19,7 +19,7 @@ public class LoginController {
      */
     public Cliente login(String nombreUsuario, String contrasena) {
         // TODO: usar servicioUsuarios.login(nombreUsuario, contrasena)
-        return null;
+        return servicioUsuarios.login(nombreUsuario, contrasena);
     }
 
     /**
@@ -27,7 +27,7 @@ public class LoginController {
      */
     public ClienteNatural registrarClienteNatural(String nombreUsuario, String correo, String contrasena) {
         // TODO: usar servicioUsuarios.registrarClienteNatural(...)
-        return null;
+        return servicioUsuarios.registrarClienteNatural(nombreUsuario, correo, contrasena);
     }
 
     /**
@@ -35,7 +35,7 @@ public class LoginController {
      */
     public Organizador registrarOrganizador(String nombreUsuario, String correo, String contrasena) {
         // TODO: usar servicioUsuarios.registrarOrganizador(...)
-        return null;
+        return servicioUsuarios.registrarOrganizador(nombreUsuario, correo, contrasena);
     }
 
     /**
@@ -43,7 +43,7 @@ public class LoginController {
      */
     public Administrador registrarAdministrador(String nombreUsuario, String correo, String contrasena) {
         // TODO: usar servicioUsuarios.registrarAdministrador(...)
-        return null;
+        return servicioUsuarios.registrarAdministrador(nombreUsuario, correo, contrasena);
     }
 
     /**
@@ -51,6 +51,6 @@ public class LoginController {
      */
     public boolean existeUsuario(String nombreUsuario) {
         // TODO: usar servicioUsuarios.existeUsuario(nombreUsuario)
-        return false;
+        return servicioUsuarios.existeUsuario(nombreUsuario);
     }
 }

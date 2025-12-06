@@ -21,6 +21,7 @@ public class MarketplaceController {
      */
     public void publicarOferta(ClienteNatural vendedor, Tiquete tiquete, double precio) {
         // TODO: servicioMarketPlace.publicarOferta(vendedor, tiquete, precio);
+    	servicioMarketPlace.publicarOferta(vendedor, tiquete, precio);
     }
 
     /**
@@ -28,6 +29,7 @@ public class MarketplaceController {
      */
     public void cancelarOferta(ClienteNatural vendedor, Oferta oferta) {
         // TODO: servicioMarketPlace.cancelarOferta(oferta, vendedor);
+    	servicioMarketPlace.cancelarOferta(oferta, vendedor);
     }
 
     /**
@@ -38,6 +40,7 @@ public class MarketplaceController {
                                   double nuevoPrecio,
                                   String metodoDePago) {
         // TODO: servicioMarketPlace.crearContraOferta(comprador, ofertaOriginal, nuevoPrecio, metodoDePago);
+    	servicioMarketPlace.crearContraOferta(comprador, ofertaOriginal, nuevoPrecio, metodoDePago);
     }
 
     /**
@@ -45,6 +48,7 @@ public class MarketplaceController {
      */
     public void cancelarContraOferta(ClienteNatural comprador, ContraOferta contraOferta) {
         // TODO: servicioMarketPlace.cancelarContraOferta(contraOferta, comprador);
+    	servicioMarketPlace.cancelarContraOferta(contraOferta, comprador);
     }
 
     /**
@@ -52,6 +56,7 @@ public class MarketplaceController {
      */
     public void aceptarContraOferta(ClienteNatural vendedor, ContraOferta contraOferta) {
         // TODO: servicioMarketPlace.aceptarContraOferta(contraOferta, vendedor);
+    	servicioMarketPlace.aceptarContraOferta(contraOferta, vendedor);
     }
 
     /**
@@ -61,6 +66,7 @@ public class MarketplaceController {
                               Oferta oferta,
                               String metodoDePago) {
         // TODO: servicioMarketPlace.comprarOferta(oferta, comprador, metodoDePago);
+    	servicioMarketPlace.comprarOferta(oferta, comprador, metodoDePago);
     }
 
     /**
@@ -68,7 +74,7 @@ public class MarketplaceController {
      */
     public List<Oferta> obtenerOfertasDeCliente(ClienteNatural cliente) {
         // TODO: servicioMarketPlace.obtenerOfertasDeCliente(cliente);
-        return null;
+        return servicioMarketPlace.obtenerOfertasDeCliente(cliente);
     }
 
     /**
@@ -76,6 +82,6 @@ public class MarketplaceController {
      */
     public List<ContraOferta> obtenerContraOfertasDeCliente(ClienteNatural cliente) {
         // TODO: servicioMarketPlace.obtenerContraOfertasDeCliente(cliente);
-        return null;
+        return servicioMarketPlace.obtenerContraOfertasDeCliente(cliente);
     }
 }

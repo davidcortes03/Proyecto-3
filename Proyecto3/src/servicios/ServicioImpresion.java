@@ -20,6 +20,15 @@ public class ServicioImpresion {
 	 public void imprimirTiquete(Tiquete tiquete) {
 		 
 	 }
+	 
+	 /*
+	  * Imprime una lista de tiquetes
+	  */
+	 public void imprimirTiquetes(List<Tiquete> tiquetes) {
+		// TODO Auto-generated method stub
+		
+	 }
+	 
 	 /*
 	  * Genera el QR para poder visualizar la info del tiquete.
 	  */
@@ -31,5 +40,10 @@ public class ServicioImpresion {
 	  */
 	 public List<Tiquete> obtenerTiquetesImprimibles(ClienteNatural cliente) {
 	    	
+	 }
+
+	 public void setRutaSalida(String ruta) {
+		// TODO Auto-generated method stub
+		
 	 }
 }

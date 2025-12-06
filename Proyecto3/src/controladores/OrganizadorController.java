@@ -34,7 +34,7 @@ public class OrganizadorController {  // ojo al nombre exacto que tengas: Organi
                               LocalDateTime fecha,
                               Venue venue) {
         // TODO: usar servicioOrganizador.crearEvento(...)
-        return null;
+        return servicioOrganizador.crearEvento(organizador, nombre, tipoEvento, fecha, venue);
     }
 
     /**
@@ -49,7 +49,9 @@ public class OrganizadorController {  // ojo al nombre exacto que tengas: Organi
         // Localidad loc = servicioOrganizador.crearLocalidad(...);
         // servicioOrganizador.agregarLocalidad(evento, loc);
         // return loc;
-        return null;
+    	Localidad loc = servicioOrganizador.crearLocalidad(nombre, capacidad, conAsientos, precioLoc);
+    	servicioOrganizador.agregarLocalidad(evento, loc);
+    	return loc;
     }
 
     /**
@@ -57,7 +59,7 @@ public class OrganizadorController {  // ojo al nombre exacto que tengas: Organi
      */
     public List<Evento> obtenerEventosDeOrganizador(Organizador organizador) {
         // TODO: usar servicioOrganizador.obtenerEventosDeOrganizador(...)
-        return null;
+        return servicioOrganizador.obtenerEventosDeOrganizador(organizador);
     }
 
     /**
@@ -65,6 +67,7 @@ public class OrganizadorController {  // ojo al nombre exacto que tengas: Organi
      */
     public void solicitarNuevoVenue(Organizador organizador, Venue venuePropuesto) {
         // TODO: servicioSolicitudes.crearSolicitudVenue(organizador, venuePropuesto);
+    	servicioSolicitudes.crearSolicitudVenue(organizador, venuePropuesto);
     }
 
     /**
@@ -72,6 +75,7 @@ public class OrganizadorController {  // ojo al nombre exacto que tengas: Organi
      */
     public void solicitarCancelacionEvento(Organizador organizador, Evento evento, String motivo) {
         // TODO: servicioSolicitudes.crearSolicitudCancelacionEvento(...)
+    	servicioSolicitudes.crearSolicitudCancelacionEvento(organizador, evento, motivo);
     }
 
     /**
@@ -79,7 +83,8 @@ public class OrganizadorController {  // ojo al nombre exacto que tengas: Organi
      */
     public double consultarVentasEvento(Evento evento) {
         // TODO: servicioReportes.calcularVentasPorEvento(evento);
-        return 0.0;
+    	return servicioReportes.calcularVentasPorEvento(evento);
+
     }
 
     /**
@@ -87,6 +92,6 @@ public class OrganizadorController {  // ojo al nombre exacto que tengas: Organi
      */
     public int consultarCantidadTiquetesVendidos(Evento evento) {
         // TODO: servicioReportes.contarTiquetesVendidosPorEvento(evento);
-        return 0;
+        return servicioReportes.contarTiquetesVendidosPorEvento(evento);
     }
 }

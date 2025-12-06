@@ -32,6 +32,7 @@ public class ClienteController {
      * Agrega un item al carrito del cliente.
      */
     public void agregarItemAlCarrito(ClienteNatural cliente, Item item) {
+    	cliente.agregarAlCarrito(item);
         // TODO: cliente.getCarrito().add(item) o cliente.agregarAlCarrito(item)
     }
 
@@ -39,6 +40,7 @@ public class ClienteController {
      * Elimina un item del carrito del cliente.
      */
     public void eliminarItemDelCarrito(ClienteNatural cliente, Item item) {
+    	cliente.getCarrito().remove(item);
         // TODO: remover item del carrito
     }
 
@@ -46,6 +48,7 @@ public class ClienteController {
      * Vacía el carrito del cliente.
      */
     public void vaciarCarrito(ClienteNatural cliente) {
+    	cliente.getCarrito().clear();
         // TODO: limpiar lista carritoCompras
     }
 
@@ -54,13 +57,15 @@ public class ClienteController {
      */
     public List<Item> obtenerCarrito(ClienteNatural cliente) {
         // TODO: return cliente.getCarrito();
-        return null;
+        return cliente.getCarrito();
     }
 
     /**
      * Compra todo el carrito del cliente.
      */
     public void comprarCarrito(ClienteNatural cliente, String metodoDePago) {
+    	servicioCompras.comprarCarrito(cliente, metodoDePago);
+    	servicioImpresion.imprimirTiquetes(cliente.getMisTiquetes());
         // TODO: usar servicioCompras.comprarCarrito(...)
         // TODO: opcionalmente llamar a servicioImpresion para imprimir tiquetes
     }
@@ -69,6 +74,8 @@ public class ClienteController {
      * Compra un solo item del carrito.
      */
     public void comprarItem(ClienteNatural cliente, Item item, String metodoDePago) {
+    	servicioCompras.comprarItemIndividual(cliente, item, metodoDePago);
+    	servicioImpresion.imprimirTiquetes(cliente.getMisTiquetes());
         // TODO: usar servicioCompras.comprarItemIndividual(...)
         // TODO: opcionalmente imprimir tiquetes de ese item
     }
@@ -77,6 +84,7 @@ public class ClienteController {
      * Solicita reembolso de un tiquete.
      */
     public void solicitarReembolso(ClienteNatural cliente, Tiquete tiquete, String motivo) {
+    	servicioSolicitudes.crearSolicitudReembolso(cliente, tiquete, motivo);
         // TODO: usar servicioSolicitudes.crearSolicitudReembolso(...)
     }
 
@@ -84,14 +92,15 @@ public class ClienteController {
      * Obtiene los tiquetes del cliente.
      */
     public List<Tiquete> obtenerTiquetesCliente(ClienteNatural cliente) {
+    	return cliente.getMisTiquetes();
         // TODO: return cliente.getMisTiquetes();
-        return null;
     }
 
     /**
      * Imprime un tiquete específico.
      */
     public void imprimirTiquete(Tiquete tiquete) {
+    	servicioImpresion.imprimirTiquete(tiquete);
         // TODO: servicioImpresion.imprimirTiquete(tiquete);
     }
 
@@ -99,6 +108,7 @@ public class ClienteController {
      * Imprime todos los tiquetes del cliente.
      */
     public void imprimirTodosLosTiquetes(ClienteNatural cliente) {
+    	servicioImpresion.imprimirTiquetes(cliente.getMisTiquetes());
         // TODO: servicioImpresion.imprimirTiquetes(cliente.getMisTiquetes());
     }
 
@@ -106,6 +116,7 @@ public class ClienteController {
      * Consulta las ventas de un evento, vista cliente (si aplica para reportes).
      */
     public double consultarVentasEvento(Evento evento) {
+    	servicioReportes.calcularVentasPorEvento(evento);
         // TODO: servicioReportes.calcularVentasPorEvento(evento);
         return 0.0;
     }

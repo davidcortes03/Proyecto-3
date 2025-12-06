@@ -25,7 +25,7 @@ public class ServicioUsuarios {
                 return cliente;
             }
         }
-        return null;
+        throw new RuntimeException("Usuario o contraseña incorrectos");
     }
 
     /*

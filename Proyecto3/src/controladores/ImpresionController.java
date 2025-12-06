@@ -18,6 +18,7 @@ public class ImpresionController {
      * Cambia la ruta donde se guardan los archivos de impresión.
      */
     public void configurarRutaSalida(String ruta) {
+    	servicioImpresion.setRutaSalida(ruta);
         // TODO: servicioImpresion.setRutaSalida(ruta);
     }
 
@@ -25,6 +26,7 @@ public class ImpresionController {
      * Imprime un tiquete.
      */
     public void imprimirTiquete(Tiquete tiquete) {
+    	servicioImpresion.imprimirTiquete(tiquete);
         // TODO: servicioImpresion.imprimirTiquete(tiquete);
     }
 
@@ -32,6 +34,7 @@ public class ImpresionController {
      * Imprime una lista de tiquetes.
      */
     public void imprimirTiquetes(List<Tiquete> tiquetes) {
+    	servicioImpresion.imprimirTiquetes(tiquetes);
         // TODO: servicioImpresion.imprimirTiquetes(tiquetes);
     }
 
@@ -39,6 +42,7 @@ public class ImpresionController {
      * Imprime todos los tiquetes de un cliente.
      */
     public void imprimirTiquetesCliente(ClienteNatural cliente) {
+    	servicioImpresion.imprimirTiquetes(cliente.getMisTiquetes());
         // TODO: servicioImpresion.imprimirTiquetes(cliente.getMisTiquetes());
     }
 }
