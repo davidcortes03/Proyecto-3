@@ -26,6 +26,10 @@ public class Transaccion {
 		this.metodoDePago = metodoDePago;
 		this.comprador = comprador;
 		this.items = items;
+		this.item = null;
+		this.oferta = null;
+		this.contraOferta = null;
+		
 	}
 	
 	public Transaccion(ClienteNatural comprador, String metodoDePago, Item item) {
@@ -33,7 +37,10 @@ public class Transaccion {
 		this.idTransaccion = generarId();
 		this.metodoDePago = metodoDePago;
 		this.comprador = comprador;
+		this.items = null;
 		this.item = item;
+		this.oferta = null;
+		this.contraOferta = null;
 	}
 	
 	public Transaccion(ClienteNatural comprador, String metodoDePago, Oferta oferta) {
@@ -41,7 +48,10 @@ public class Transaccion {
 		this.idTransaccion = generarId();
 		this.metodoDePago = metodoDePago;
 		this.comprador = comprador;
+		this.items = null;
+		this.item = null;
 		this.oferta = oferta;
+		this.contraOferta = null;
 	}
 	
 	public Transaccion(ClienteNatural comprador, String metodoDePago, ContraOferta contraOferta) {
@@ -49,6 +59,9 @@ public class Transaccion {
 		this.idTransaccion = generarId();
 		this.metodoDePago = metodoDePago;
 		this.comprador = comprador;
+		this.items = null;
+		this.item = null;
+		this.oferta = null;
 		this.contraOferta = contraOferta;
 	}
 	
