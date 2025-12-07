@@ -1,5 +1,7 @@
 package solicitudes;
 
+import java.util.UUID;
+
 import tiquetesCompra.Tiquete;
 import usuarios.*;
 
@@ -8,6 +10,7 @@ public class SolicitudReembolso {
 	private ClienteNatural cliente;
 	private Tiquete tiqueteReembolso;
 	private String estadoReembolso;
+	private String id;
 	
 	public SolicitudReembolso(ClienteNatural cliente, Tiquete tiqueteReembolso, String motivo) {
 		this.cliente = cliente;
@@ -43,7 +46,16 @@ public class SolicitudReembolso {
 	public void setTiqeteReembolso(Tiquete nuevoTiquete) {
 		this.tiqueteReembolso = nuevoTiquete;
 	}
+	
+	public String generarId() {
+		return UUID.randomUUID().toString();
+	}
 
+	public String getId() {
+		return id;
+	}
+	
+	
 	
 	
 }

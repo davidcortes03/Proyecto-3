@@ -1,5 +1,7 @@
 package solicitudes;
 
+import java.util.UUID;
+
 import modelo.Evento;
 import usuarios.Organizador;
 
@@ -9,14 +11,16 @@ public class SolicitudCancelacionEvento {
 	private Evento eventoCancelar;
 	private String estado; //APROBADO, RECHAZADO O EN ESPERA.
 	private String motivo;
+	private String id;
 	
 	
 	
-	public SolicitudCancelacionEvento(Organizador organizador, Evento evento, String motivo) {
+	public SolicitudCancelacionEvento(Organizador organizador, Evento evento, String motivo, String id) {
 		this.organizador = organizador;
 		this.estado = "EN ESPERA";
 		this.eventoCancelar = evento;
 		this.motivo = motivo;
+		this.id = id;
 	}
 
 
@@ -59,4 +63,13 @@ public class SolicitudCancelacionEvento {
 		this.estado = estado;
 	}
 	
+	public String generarId() {
+		return UUID.randomUUID().toString();
+	}
+	
+	public String getId() {
+		return id;
+	}
+	
 }
+

@@ -1,6 +1,8 @@
 package solicitudes;
 
 
+import java.util.UUID;
+
 import usuarios.Organizador;
 
 public class SolicitudVenue {
@@ -10,6 +12,7 @@ public class SolicitudVenue {
 	private String nombreVenue;
 	private String estadoSolicitud; //APROBADA, RECHAZADA O EN ESPERA. 
 	private Organizador organizador;
+	private String id;
 	
 	public SolicitudVenue (String ubicacion, int capacidadMaxima, String nombreVenue, Organizador organizador) {
 		this.ubicacion = ubicacion;
@@ -58,7 +61,12 @@ public class SolicitudVenue {
 	public void setEstadoSolicitud(String estadoSolicitud) {
 		this.estadoSolicitud = estadoSolicitud;
 	}
-
 	
+	public String generarId() {
+		return UUID.randomUUID().toString();
+	}
 	
+	public String getId() {
+		return id;
+	}
 }
