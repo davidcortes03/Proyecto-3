@@ -46,7 +46,7 @@ public class MarketplaceVista extends JFrame{
 		
 		btnComprar.addActionListener(e -> comprarOferta());
 		
-		btnComprar.addActionListener(e -> crearContraOferta());
+		btnContraOferta.addActionListener(e -> crearContraOferta());
 		
 		setVisible(true);
 		
