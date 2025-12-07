@@ -55,6 +55,10 @@ public class SistemaBoletaMaster implements Serializable {
 			}
 		}
 	}
+	
+	public List<Evento> getRepoEventos() {
+		return repoEventos;
+	}
 
 	//Metodos solicitudes
 	public List<SolicitudVenue> getSolicitudesVenue() {

@@ -16,6 +16,7 @@ import modelo.*;
 import servicios.ServicioCompras;
 import tiquetesCompra.*;
 import usuarios.ClienteNatural;
+import persistencias.SistemaBoletaMaster;
 
 public class ComprarTiquetesVista extends JFrame {
 	
@@ -28,7 +29,6 @@ public class ComprarTiquetesVista extends JFrame {
 	private JComboBox<String> comboAsientos;
 	private JLabel lblPrecioBase;
 	
-	private JTextField txtPrecio;
 	private JTextField txtCantidad;
 	
 	public ComprarTiquetesVista(SistemaBoletaMaster sistema, ServicioCompras servicioCompras, ClienteNatural cliente) {
@@ -121,7 +121,7 @@ public class ComprarTiquetesVista extends JFrame {
 			return null;
 		}
 		
-		for (Localidad loc : sistema.getRepoEventos()) {
+		for (Localidad loc : evento.getVenue().getLocalidades()) {
 			if (loc.getNombre().equals(nombre)) {
 				return loc;
 			}
@@ -147,18 +147,7 @@ public class ComprarTiquetesVista extends JFrame {
 		}
 		
 	}
-	
-	
-	private int calcularTiquetesVendidos(Evento evento) {
-		int vendidos = 0;
-		for (Tiquete t : sistema.getTiquetes()) {
-			if (t.getEvento().getNombre().equals(evento.getNombre())) {
-				vendidos++;
-			}
-		}
-		
-		return vendidos;
-	}
+
 	
 	private void procesarCompra() {
 		
