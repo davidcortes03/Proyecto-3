@@ -57,7 +57,7 @@ public class ServicioSolicitudes {
             throw new IllegalArgumentException("El organizador no es dueño de este evento.");
         }
 
-        SolicitudCancelacionEvento solicitud = new SolicitudCancelacionEvento(organizador, evento, motivo);
+        SolicitudCancelacionEvento solicitud = new SolicitudCancelacionEvento(organizador, evento, motivo, java.util.UUID.randomUUID().toString());
         solicitudRepo.agregarSolicitudCancelacionEvento(solicitud);
     }
 
