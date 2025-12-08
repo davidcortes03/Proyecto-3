@@ -28,22 +28,28 @@ public class ServicioOrganizador {
 	 * Crea el evento.
 	 */
 	public Evento crearEvento(Organizador organizador, String nombre, String tipoEvento, LocalDateTime fecha, Venue venue) {
-		boolean comprobante = true;
-		Evento eventoCreado = new Evento(nombre, venue, fecha, tipoEvento, organizador);
-		for(Evento e: venue.getEventosAsociados()) {
-			if(e.getFechaHora().equals(fecha)) {
-				comprobante = false;
-			}
-		}
-			if(comprobante == true) {
-				venue.getEventosAsociados().add(eventoCreado);
-				organizador.getMisEventos().add(eventoCreado);
-				eventoRepo.agregar(eventoCreado);
-				usuarioRepo.actualizar(organizador);
-				venueRepo.actualizar(venue);		
-			}
-		
-		return eventoCreado;
+        boolean comprobante = true;
+        Evento eventoCreado = new Evento(nombre, venue, fecha, tipoEvento, organizador);
+        eventoCreado.setEstado("PENDIENTE");
+        for (Evento e : venue.getEventosAsociados()) {
+            if (e.getFechaHora().equals(fecha)) {
+                comprobante = false;
+            }
+        }
+        if (comprobante) {
+            if (venue.getLocalidades().isEmpty()) {
+                Localidad general = new Localidad("General", Math.min(venue.getCapacidadMax(), 50), true, 120.0);
+                general.crearTodosLosAsientos();
+                venue.getLocalidades().add(general);
+            }
+            venue.getEventosAsociados().add(eventoCreado);
+            organizador.getMisEventos().add(eventoCreado);
+            eventoRepo.agregar(eventoCreado);
+            usuarioRepo.actualizar(organizador);
+            venueRepo.actualizar(venue);
+        }
+
+        return eventoCreado;
 	}
 	
 	/*

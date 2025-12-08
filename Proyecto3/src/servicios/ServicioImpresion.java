@@ -23,19 +23,19 @@ public class ServicioImpresion {
 	 */
 	public void imprimirTiquete(Tiquete t) {
 
-		if (t.getImpreso()) {
+        if (t.getImpreso()) {
             JOptionPane.showMessageDialog(null, "Este tiquete ya fue impreso y no puede volver a imprimirse.",
                     "Impresión bloqueada", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-		String rutaQR = generarQR(t);
+        String rutaQR = generarQR(t);
 
-		new VentanaTiquete(t, rutaQR).setVisible(true);
+        new VentanaTiquete(t, rutaQR).setVisible(true);
 
-		t.setImpreso(true);
+        t.setImpreso(true);
 
-		tiqueteRepo.actualizar(t);
+        tiqueteRepo.actualizar(t);
     }
 	 
 	 /*

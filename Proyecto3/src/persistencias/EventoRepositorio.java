@@ -29,4 +29,24 @@ public class EventoRepositorio {
     public List<Evento> getEventos() {
         return eventos;
     }
+
+    public List<Evento> getEventosPendientes() {
+        List<Evento> pendientes = new ArrayList<>();
+        for (Evento evento : eventos) {
+            if ("PENDIENTE".equals(evento.getEstado())) {
+                pendientes.add(evento);
+            }
+        }
+        return pendientes;
+    }
+
+    public List<Evento> getEventosActivos() {
+        List<Evento> activos = new ArrayList<>();
+        for (Evento evento : eventos) {
+            if ("ACTIVO".equals(evento.getEstado())) {
+                activos.add(evento);
+            }
+        }
+        return activos;
+    }
 }

@@ -3,6 +3,7 @@ package controladores;
 import java.util.List;
 
 import modelo.Evento;
+import persistencias.EventoRepositorio;
 import servicios.ServicioAdmin;
 import servicios.ServicioCompras;
 import servicios.ServicioReportes;
@@ -18,15 +19,18 @@ public class AdminController {
     private ServicioCompras servicioCompras;      // para configurar cargos, si lo haces desde admin
     private ServicioSolicitudes servicioSolicitudes;
     private ServicioReportes servicioReportes;
+    private EventoRepositorio eventoRepositorio;
 
     public AdminController(ServicioAdmin servicioAdmin,
                            ServicioCompras servicioCompras,
                            ServicioSolicitudes servicioSolicitudes,
-                           ServicioReportes servicioReportes) {
-        this.servicioAdmin = servicioAdmin;  
+                           ServicioReportes servicioReportes,
+                           EventoRepositorio eventoRepositorio) {
+        this.servicioAdmin = servicioAdmin;
         this.servicioCompras = servicioCompras;
         this.servicioSolicitudes = servicioSolicitudes;
         this.servicioReportes = servicioReportes;
+        this.eventoRepositorio = eventoRepositorio;
     }
 
     /**
@@ -80,7 +84,7 @@ public class AdminController {
      * Solicitudes de cancelación pendientes.
      */
     public List<SolicitudCancelacionEvento> obtenerSolicitudesCancelacionPendientes() {
-    	servicioSolicitudes.obtenerEventosPendientes();
+        servicioSolicitudes.obtenerEventosPendientes();
         // TODO: servicioSolicitudes.obtenerEventosPendientes();
         return null;
     }
@@ -93,10 +97,24 @@ public class AdminController {
     public void rechazarCancelacionEvento(Administrador admin,
                                           SolicitudCancelacionEvento solicitud,
                                           String motivo) {
-    	servicioSolicitudes.rechazarCancelacionEvento(admin, solicitud, motivo);
+        servicioSolicitudes.rechazarCancelacionEvento(admin, solicitud, motivo);
         // TODO: servicioSolicitudes.rechazarCancelacionEvento(admin, solicitud, motivo);
     }
 
+    public List<Evento> obtenerEventosPendientes() {
+        return eventoRepositorio.getEventosPendientes();
+    }
+
+    public void aprobarEvento(Administrador admin, Evento evento) {
+        evento.setEstado("ACTIVO");
+        eventoRepositorio.actualizar(evento);
+    }
+
+    public void rechazarEvento(Administrador admin, Evento evento) {
+        evento.setEstado("RECHAZADO");
+        eventoRepositorio.actualizar(evento);
+    }
+    
     /**
      * Consulta ganancias totales de la plataforma.
      */

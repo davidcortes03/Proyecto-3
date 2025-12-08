@@ -80,7 +80,7 @@ public class MainController {
                                                                servicioSolicitudes,
                                                                servicioReportes);
         this.adminController = new AdminController(servicioAdmin, servicioCompras,
-                                                   servicioSolicitudes, servicioReportes);
+        											servicioSolicitudes, servicioReportes, eventoRepo);
         this.marketplaceController = new MarketplaceController(servicioMarketPlace);
         this.impresionController = new ImpresionController(servicioImpresion);
         cargarDatosDemo();
@@ -145,12 +145,20 @@ public class MainController {
         return impresionController;
     }
     
+    public ServicioSolicitudes getServicioSolicitudes() {
+        return servicioSolicitudes;
+    }
+
     public UsuarioRepositorio getUsuarioRepo() {
         return usuarioRepo;
     }
 
     public EventoRepositorio getEventoRepo() {
         return eventoRepo;
+    }
+
+    public VenueRepositorio getVenueRepo() {
+        return venueRepo;
     }
 
     public TiqueteRepositorio getTiqueteRepo() {

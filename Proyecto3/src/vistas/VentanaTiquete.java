@@ -33,5 +33,5 @@ public class VentanaTiquete extends JFrame {
         }
 
         add(panel);
-}
+	}
 }
