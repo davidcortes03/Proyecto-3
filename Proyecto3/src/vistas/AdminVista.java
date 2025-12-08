@@ -12,6 +12,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionListener;
 
 import controladores.MainController;
 import modelo.Evento;
@@ -28,6 +29,7 @@ public class AdminVista extends JPanel {
     private final JLabel lblBienvenida;
     private final JList<Evento> listaPendientes;
     private final JList<SolicitudVenue> listaVenue;
+    private final JLabel lblDetalleEvento;
 
     public AdminVista(MainController mainController, AplicacionFrame frame) {
         this.mainController = mainController;
@@ -43,14 +45,50 @@ public class AdminVista extends JPanel {
         lblBienvenida.setForeground(Color.WHITE);
         lblBienvenida.setFont(lblBienvenida.getFont().deriveFont(Font.BOLD, 18f));
         lblBienvenida.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-        add(lblBienvenida, BorderLayout.NORTH);
 
         lblResumen = new JLabel("", SwingConstants.CENTER);
         lblResumen.setFont(lblResumen.getFont().deriveFont(Font.PLAIN, 15f));
-        lblResumen.setBorder(BorderFactory.createEmptyBorder(30, 10, 30, 10));
-        add(lblResumen, BorderLayout.NORTH);
+        lblResumen.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JPanel cabecera = new JPanel(new BorderLayout());
+        cabecera.setBackground(new Color(247, 250, 252));
+        cabecera.add(lblBienvenida, BorderLayout.NORTH);
+        cabecera.add(lblResumen, BorderLayout.SOUTH);
+        add(cabecera, BorderLayout.NORTH);
+
+        lblDetalleEvento = new JLabel("Selecciona un evento para ver sus localidades", SwingConstants.CENTER);
+        lblDetalleEvento.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        lblDetalleEvento.setOpaque(true);
+        lblDetalleEvento.setBackground(new Color(235, 245, 238));
 
         listaPendientes = new JList<>();
+        listaPendientes.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
+            double precio = value.getVenue().getLocalidades().isEmpty()
+                    ? 0.0
+                    : value.getVenue().getLocalidades().get(0).getPrecioConOSinDescuento();
+            JLabel label = new JLabel(value.getNombre() + " | " + value.getFechaHora()
+                    + " | Precio sugerido: $" + precio + " | Estado: " + value.getEstado());
+            if (isSelected) {
+                label.setOpaque(true);
+                label.setBackground(new Color(230, 245, 233));
+            }
+            return label;
+        });
+
+        ListSelectionListener listener = e -> {
+            Evento seleccionado = listaPendientes.getSelectedValue();
+            if (seleccionado == null) {
+                lblDetalleEvento.setText("Selecciona un evento para ver sus localidades");
+                return;
+            }
+            StringBuilder builder = new StringBuilder("Localidades: ");
+            seleccionado.getVenue().getLocalidades().forEach(loc -> builder.append(loc.getNombre())
+                    .append(" ($").append(loc.getPrecioConOSinDescuento())
+                    .append(", cupos ").append(loc.getCapacidadDisponible())
+                    .append(")  "));
+            lblDetalleEvento.setText(builder.toString());
+        };
+        listaPendientes.addListSelectionListener(listener);
         JScrollPane scrollEventos = new JScrollPane(listaPendientes);
         scrollEventos.setBorder(BorderFactory.createTitledBorder("Eventos por aprobar"));
 
@@ -107,7 +145,12 @@ public class AdminVista extends JPanel {
         pie.add(btnAprobarVenue);
         pie.add(btnRechazarVenue);
         pie.add(btnSalir);
-        add(pie, BorderLayout.SOUTH);
+
+        JPanel pieWrapper = new JPanel(new BorderLayout());
+        pieWrapper.setBackground(new Color(247, 250, 252));
+        pieWrapper.add(lblDetalleEvento, BorderLayout.NORTH);
+        pieWrapper.add(pie, BorderLayout.SOUTH);
+        add(pieWrapper, BorderLayout.SOUTH);
     }
 
     public void setAdministrador(Administrador admin) {

@@ -1,5 +1,6 @@
 package persistencias;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import solicitudes.SolicitudCancelacionEvento;
 import solicitudes.SolicitudReembolso;
 import solicitudes.SolicitudVenue;
 
-public class SolicitudRepositorio {
+public class SolicitudRepositorio implements Serializable{
 	private final List<SolicitudReembolso> solicitudesReembolso;
     private final List<SolicitudVenue> solicitudesVenue;
     private final List<SolicitudCancelacionEvento> solicitudesCancelacion;

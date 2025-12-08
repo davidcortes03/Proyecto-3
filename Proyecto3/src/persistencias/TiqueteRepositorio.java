@@ -1,11 +1,12 @@
 package persistencias;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import tiquetesCompra.Tiquete;
 
-public class TiqueteRepositorio {
+public class TiqueteRepositorio implements Serializable{
 	private final List<Tiquete> tiquetes;
 
     public TiqueteRepositorio() {

@@ -1,12 +1,13 @@
 package persistencias;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import usuarios.Cliente;
 import usuarios.ClienteNatural;
 
-public class UsuarioRepositorio {
+public class UsuarioRepositorio implements Serializable{
 	private final List<Cliente> usuarios;
 
     public UsuarioRepositorio() {

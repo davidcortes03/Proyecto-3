@@ -76,6 +76,10 @@ public class MarketplaceController {
         // TODO: servicioMarketPlace.obtenerOfertasDeCliente(cliente);
         return servicioMarketPlace.obtenerOfertasDeCliente(cliente);
     }
+    
+    public List<Oferta> obtenerOfertasDisponibles(ClienteNatural cliente) {
+        return servicioMarketPlace.obtenerOfertasDisponibles(cliente);
+    }
 
     /**
      * Obtiene las contraofertas de un cliente.

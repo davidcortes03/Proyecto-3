@@ -97,18 +97,17 @@ public class MainController {
         Administrador admin = new Administrador("admin", "admin@demo.com", "admin");
         Organizador organizador = new Organizador("org", "org@demo.com", "orgpass");
         ClienteNatural cliente = new ClienteNatural("cliente", "cliente@demo.com", "1234");
+        cliente.setSaldoVirtual(500.0);
 
         usuarioRepo.agregarUsuario(admin);
         usuarioRepo.agregarUsuario(organizador);
         usuarioRepo.agregarUsuario(cliente);
 
         Venue venue = new Venue("Arena Demo", 100, "Cra 1 # 2-3");
-        venueRepo.agregar(venue);
-
         Localidad vip = new Localidad("VIP", 10, true, 150.0);
-        for (int i = 1; i <= 10; i++) {
-            vip.getAsientos().add(new Asiento(i));
-        }
+        vip.crearTodosLosAsientos();
+        venue.getLocalidades().add(vip);
+        venueRepo.agregar(venue);
         Evento concierto = new Evento("Concierto Demo", venue, LocalDateTime.now().plusDays(15), "MUSICA", organizador);
         eventoRepo.agregar(concierto);
 

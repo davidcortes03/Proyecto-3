@@ -31,15 +31,21 @@ public class ServicioMarketPlace {
 	 * revisa si el tiquete es apto para ser ofertado y si sí, crea la oferta. 
 	 */
 	public void publicarOferta(ClienteNatural vendedor, Tiquete tiquete, double precio) {
-		if("NO REVENTA".equals(tiquete.getEstadoReventa())) {
-			Oferta OfertaCreada = new Oferta(precio, tiquete, vendedor);
-			marketPlaceRepo.agregarOferta(OfertaCreada);
-			tiquete.setEstadoReventa("EN REVENTA");
-			vendedor.getOfertas().add(OfertaCreada);
-			tiqueteRepo.actualizar(tiquete);
-			usuarioRepo.actualizar(vendedor);
-		}
+        if (tiquete.getImpreso()) {
+                throw new IllegalStateException("El tiquete ya está impreso y no puede revenderse.");
+        }
+        if("NO REVENTA".equals(tiquete.getEstadoReventa())) {
+                Oferta OfertaCreada = new Oferta(precio, tiquete, vendedor);
+                marketPlaceRepo.agregarOferta(OfertaCreada);
+                tiquete.setEstadoReventa("EN REVENTA");
+                vendedor.getOfertas().add(OfertaCreada);
+                tiqueteRepo.actualizar(tiquete);
+                usuarioRepo.actualizar(vendedor);
+        } else {
+                throw new IllegalStateException("El tiquete ya está en proceso de reventa.");
+        }
 	}
+	
 	/*
 	 * Elimina una oferta creada. No la borra del marketPlaceRepo porque esta podría ser el registro.
 	 */
@@ -100,6 +106,7 @@ public class ServicioMarketPlace {
         }
         contraOferta.getComprador().agregarTiquete(t);
         vendedor.getMisTiquetes().remove(t);
+        t.setEstadoReventa("NO REVENTA");
         contraOferta.getComprador().agregarHistorialFinanciero(tran);
         transaccionRepo.agregar(tran);
         
@@ -120,45 +127,60 @@ public class ServicioMarketPlace {
     		    throw new IllegalStateException("La oferta no está disponible.");
     		}
     		if (comprador.equals(oferta.getVendedor())) {
-    		    throw new IllegalArgumentException("No puedes comprar tu propia oferta.");
-    		}
+                throw new IllegalArgumentException("No puedes comprar tu propia oferta.");
+            }
     		double saldoCliente = comprador.getSaldoVirtual();
 		double precioPagar = oferta.getPrecioOferta();
 		ClienteNatural vendedor = oferta.getVendedor();
-    		if("SALDO VIRTUAL".equals(metodoDePago)) {
-    			if(precioPagar <= saldoCliente) {
-    				comprador.setSaldoVirtual(saldoCliente - precioPagar);
-    				double saldoVirtualVendedor = oferta.getVendedor().getSaldoVirtual();
-    				oferta.getVendedor().setSaldoVirtual(precioPagar + saldoVirtualVendedor);
-    				Tiquete t = oferta.getTiquete();
-    				comprador.agregarTiquete(t);
-    				vendedor.getMisTiquetes().remove(t);
-    				oferta.setEstadoOf("COMPRADA");
-    				tran.setMetodoDePago("SALDO VIRTUAL");
-    				comprador.agregarHistorialFinanciero(tran);
-    				transaccionRepo.agregar(tran);
-    				usuarioRepo.actualizar(vendedor);
-    				usuarioRepo.actualizar(comprador);
-    			}
-    		} else if("PASARELA".equals(metodoDePago)) {
-    			Tiquete t = oferta.getTiquete();
-    			comprador.agregarTiquete(t);
-    			double saldoVirtualVendedor = oferta.getVendedor().getSaldoVirtual();
-			oferta.getVendedor().setSaldoVirtual(precioPagar + saldoVirtualVendedor);
-    			vendedor.getMisTiquetes().remove(t);
-    			oferta.setEstadoOf("COMPRADA");
+		if("SALDO VIRTUAL".equals(metodoDePago)) {
+            if(precioPagar > saldoCliente) {
+                    throw new IllegalStateException("Saldo insuficiente para comprar la oferta.");
+            }
+            comprador.setSaldoVirtual(saldoCliente - precioPagar);
+            double saldoVirtualVendedor = oferta.getVendedor().getSaldoVirtual();
+            oferta.getVendedor().setSaldoVirtual(precioPagar + saldoVirtualVendedor);
+            Tiquete t = oferta.getTiquete();
+            comprador.agregarTiquete(t);
+            vendedor.getMisTiquetes().remove(t);
+            oferta.setEstadoOf("COMPRADA");
+            tran.setMetodoDePago("SALDO VIRTUAL");
+            comprador.agregarHistorialFinanciero(tran);
+            transaccionRepo.agregar(tran);
+            usuarioRepo.actualizar(vendedor);
+            usuarioRepo.actualizar(comprador);
+    } else if("PASARELA".equals(metodoDePago)) {
+            Tiquete t = oferta.getTiquete();
+            comprador.agregarTiquete(t);
+            double saldoVirtualVendedor = oferta.getVendedor().getSaldoVirtual();
+            oferta.getVendedor().setSaldoVirtual(precioPagar + saldoVirtualVendedor);
+            vendedor.getMisTiquetes().remove(t);
+            oferta.setEstadoOf("COMPRADA");
     			tran.setMetodoDePago("PASARELA");
     			comprador.agregarHistorialFinanciero(tran);;
-    			transaccionRepo.agregar(tran);
-			usuarioRepo.actualizar(vendedor);
-			usuarioRepo.actualizar(comprador);
-			}
-    		return tran;
+                transaccionRepo.agregar(tran);
+                usuarioRepo.actualizar(vendedor);
+                usuarioRepo.actualizar(comprador);
+                }
+        oferta.getTiquete().setEstadoReventa("NO REVENTA");
+        return tran;
     }
     
     public List<Oferta> obtenerOfertasDeCliente(ClienteNatural cliente) {
     		return cliente.getOfertas();
     }
+    
+    public List<Oferta> obtenerOfertasDisponibles(ClienteNatural solicitante) {
+        List<Oferta> activas = new java.util.ArrayList<>();
+        for (Oferta o : marketPlaceRepo.getOfertas()) {
+                boolean esActiva = "ACTIVA".equals(o.getEstadoOf());
+                boolean noImpreso = o.getTiquete() != null && !o.getTiquete().getImpreso();
+                boolean noPropio = solicitante == null || !o.getVendedor().equals(solicitante);
+                if (esActiva && noImpreso && noPropio) {
+                        activas.add(o);
+                }
+        }
+        return activas;
+}
     
     public List<ContraOferta> obtenerContraOfertasDeCliente(ClienteNatural cliente) {
     		return cliente.getContraOfertas();

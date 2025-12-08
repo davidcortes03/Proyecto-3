@@ -1,11 +1,12 @@
 package persistencias;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Venue;
 
-public class VenueRepositorio {
+public class VenueRepositorio implements Serializable{
 	private final List<Venue> venues;
 
     public VenueRepositorio() {

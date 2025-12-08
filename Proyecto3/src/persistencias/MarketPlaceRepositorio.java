@@ -1,13 +1,14 @@
 package persistencias;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import marketPlace.ContraOferta;
 import marketPlace.Oferta;
 
-public class MarketPlaceRepositorio {
-    private final List<Oferta> ofertas;
+public class MarketPlaceRepositorio implements Serializable{
+	private final List<Oferta> ofertas;
     private final List<ContraOferta> contraOfertas;
 
     public MarketPlaceRepositorio() {

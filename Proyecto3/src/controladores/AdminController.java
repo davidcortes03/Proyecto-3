@@ -15,8 +15,8 @@ import usuarios.Administrador;
 
 public class AdminController {
 
-    private ServicioAdmin servicioAdmin;          // si lo usas para cosas específicas de admin
-    private ServicioCompras servicioCompras;      // para configurar cargos, si lo haces desde admin
+    private ServicioAdmin servicioAdmin;         
+    private ServicioCompras servicioCompras;      
     private ServicioSolicitudes servicioSolicitudes;
     private ServicioReportes servicioReportes;
     private EventoRepositorio eventoRepositorio;
@@ -84,7 +84,7 @@ public class AdminController {
      * Solicitudes de cancelación pendientes.
      */
     public List<SolicitudCancelacionEvento> obtenerSolicitudesCancelacionPendientes() {
-        servicioSolicitudes.obtenerEventosPendientes();
+    	servicioSolicitudes.obtenerEventosPendientes();
         // TODO: servicioSolicitudes.obtenerEventosPendientes();
         return null;
     }
@@ -97,7 +97,7 @@ public class AdminController {
     public void rechazarCancelacionEvento(Administrador admin,
                                           SolicitudCancelacionEvento solicitud,
                                           String motivo) {
-        servicioSolicitudes.rechazarCancelacionEvento(admin, solicitud, motivo);
+    	servicioSolicitudes.rechazarCancelacionEvento(admin, solicitud, motivo);
         // TODO: servicioSolicitudes.rechazarCancelacionEvento(admin, solicitud, motivo);
     }
 

@@ -1,11 +1,12 @@
 package persistencias;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Evento;
 
-public class EventoRepositorio {
+public class EventoRepositorio implements Serializable {
 	private final List<Evento> eventos;
 
     public EventoRepositorio() {

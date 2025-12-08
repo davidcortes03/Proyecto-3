@@ -1,11 +1,12 @@
 package persistencias;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import compras.Transaccion;
 
-public class TransaccionRepositorio {
+public class TransaccionRepositorio implements Serializable{
 	private final List<Transaccion> transacciones;
 
     public TransaccionRepositorio() {

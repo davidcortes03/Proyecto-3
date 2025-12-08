@@ -130,25 +130,25 @@ public class Localidad {
 	 * Crea los asientos cuando se crea la instancia y los mete en la lista de asientos.
 	 */
 	public void crearTodosLosAsientos() {
-		if(conAsientos = true) {
-			int capacidadVenue = getCapacidad();
-			for(int i = 0; i <= capacidadVenue; i++) {
-				agregarAsiento(i);
-			}
-		}
+        if (conAsientos) {
+            int capacidadVenue = getCapacidad();
+            for (int i = 1; i <= capacidadVenue; i++) {
+                agregarAsiento(i);
+            }
+        }
 	}
 	
 	/*
 	 * Entrega la lista de asientos disponibles en la localidad.
 	 */
 	public List<Asiento> AsientosDisponiblesLista() {
-		List<Asiento> asientosDisponibles = new ArrayList<>();
-		for(Asiento a: asientos) {
-			if(a.getEstado() == "DESOCUPADO") {
-				asientosDisponibles.add(a);
-			}
-		}
-		return asientosDisponibles;
+        List<Asiento> asientosDisponibles = new ArrayList<>();
+        for(Asiento a: asientos) {
+                if("DESOCUPADO".equals(a.getEstado())) {
+                        asientosDisponibles.add(a);
+                }
+        }
+        return asientosDisponibles;
 	}
 	
 	/*
@@ -166,9 +166,9 @@ public class Localidad {
 	 * Reduce la capacidadDisponible de la localidad en 1 por cada boleta comprada.
 	 */
 	public void reducirCapacidadDisponible() {
-		int nuevaCapacidad = (capacidadDisponible - 1);
-		setCapacidadDisponible(nuevaCapacidad);
-	} 
+        int nuevaCapacidad = (capacidadDisponible - 1);
+        setCapacidadDisponible(nuevaCapacidad);
+}
 	
 	/*
 	 * Aumenta la capacidadaDisponible de la localidad en 1 por cada boleta reembolsada.
@@ -179,14 +179,6 @@ public class Localidad {
 			setCapacidadDisponible(nuevaCapacidad);
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-    
+	  
     
 }
