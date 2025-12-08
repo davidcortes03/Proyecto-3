@@ -23,11 +23,11 @@ public class ServicioImpresion {
 	 */
 	public void imprimirTiquete(Tiquete t) {
 
-        if (t.getImpreso()) {
-            JOptionPane.showMessageDialog(null, "Este tiquete ya fue impreso y no puede volver a imprimirse.",
-                    "Impresión bloqueada", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+		 if (t.getImpreso()) {
+             JOptionPane.showMessageDialog(null, "Este tiquete ya fue impreso y no puede volver a imprimirse.",
+                     "Impresión bloqueada", JOptionPane.WARNING_MESSAGE);
+             return;
+         }
 
         String rutaQR = generarQR(t);
 

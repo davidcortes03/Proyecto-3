@@ -80,7 +80,7 @@ public class MainController {
                                                                servicioSolicitudes,
                                                                servicioReportes);
         this.adminController = new AdminController(servicioAdmin, servicioCompras,
-        											servicioSolicitudes, servicioReportes, eventoRepo);
+        												servicioSolicitudes, servicioReportes, eventoRepo);
         this.marketplaceController = new MarketplaceController(servicioMarketPlace);
         this.impresionController = new ImpresionController(servicioImpresion);
         cargarDatosDemo();

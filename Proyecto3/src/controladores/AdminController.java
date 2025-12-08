@@ -114,7 +114,7 @@ public class AdminController {
         evento.setEstado("RECHAZADO");
         eventoRepositorio.actualizar(evento);
     }
-    
+
     /**
      * Consulta ganancias totales de la plataforma.
      */

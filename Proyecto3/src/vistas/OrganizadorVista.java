@@ -46,22 +46,35 @@ public class OrganizadorVista extends JPanel {
 
         modeloEventos = new DefaultListModel<>();
         JList<Evento> listaEventos = new JList<>(modeloEventos);
-        listaEventos.setCellRenderer((list, value, index, isSelected, cellHasFocus) ->
-                new JLabel(value.getNombre() + " - " + value.getFechaHora()));
+        listaEventos.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
+            JLabel label = new JLabel(value.getNombre() + " - " + value.getFechaHora() + " | " + value.getEstado());
+            if ("PENDIENTE".equals(value.getEstado())) {
+                label.setForeground(new Color(255, 152, 0));
+            }
+            return label;
+        });
         add(new JScrollPane(listaEventos), BorderLayout.CENTER);
 
         JPanel crearPanel = new JPanel();
         crearPanel.setBackground(new Color(250, 252, 255));
-        crearPanel.setBorder(BorderFactory.createTitledBorder("Nuevo evento demo"));
+        crearPanel.setBorder(BorderFactory.createTitledBorder("Nuevo evento"));
         JTextField txtNombre = new JTextField(10);
         JTextField txtTipo = new JTextField(8);
-        JButton btnCrear = new JButton("Crear");
+        JTextField txtVenue = new JTextField(8);
+        JTextField txtCapacidad = new JTextField(4);
+        JButton btnCrear = new JButton("Solicitar evento");
+        JButton btnVenue = new JButton("Solicitar venue");
         JButton btnSalir = new JButton("Cerrar sesión");
         crearPanel.add(new JLabel("Nombre:"));
         crearPanel.add(txtNombre);
         crearPanel.add(new JLabel("Tipo:"));
         crearPanel.add(txtTipo);
+        crearPanel.add(new JLabel("Venue:"));
+        crearPanel.add(txtVenue);
+        crearPanel.add(new JLabel("Capacidad:"));
+        crearPanel.add(txtCapacidad);
         crearPanel.add(btnCrear);
+        crearPanel.add(btnVenue);
         crearPanel.add(btnSalir);
         add(crearPanel, BorderLayout.SOUTH);
 
@@ -72,12 +85,37 @@ public class OrganizadorVista extends JPanel {
                 JOptionPane.showMessageDialog(this, "Escribe un nombre", "Validación", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            Venue venue = new Venue("Venue " + (mainController.getEventoRepo().getEventos().size() + 1), 50, "Por definir");
-            Evento nuevo = new Evento(nombre, venue, LocalDateTime.now().plusDays(7), tipo.isEmpty() ? "GENERAL" : tipo, organizador);
-            mainController.getEventoRepo().agregar(nuevo);
+            Venue venue = mainController.getVenueRepo().getFirstOrDefault(txtVenue.getText().trim(), 80);
+            Evento nuevo = mainController.getOrganizadorController().crearEvento(
+                    organizador,
+                    nombre,
+                    tipo.isEmpty() ? "GENERAL" : tipo,
+                    LocalDateTime.now().plusDays(7),
+                    venue);
+            JOptionPane.showMessageDialog(this,
+                    "Evento enviado a aprobación. Estado actual: " + nuevo.getEstado(),
+                    "Evento creado",
+                    JOptionPane.INFORMATION_MESSAGE);
             cargarEventos();
             txtNombre.setText("");
             txtTipo.setText("");
+        });
+
+        btnVenue.addActionListener(e -> {
+            String nombre = txtVenue.getText().trim();
+            int capacidad = 0;
+            try {
+                capacidad = Integer.parseInt(txtCapacidad.getText().trim());
+            } catch (NumberFormatException ex) {
+                capacidad = 80;
+            }
+            if (nombre.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Escribe el nombre del venue", "Validación", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            Venue propuesto = new Venue(nombre, capacidad, "Por definir");
+            mainController.getOrganizadorController().solicitarNuevoVenue(organizador, propuesto);
+            JOptionPane.showMessageDialog(this, "Solicitud de venue enviada al administrador", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         });
 
         btnSalir.addActionListener(e -> frame.mostrarLogin());
